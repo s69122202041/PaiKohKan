@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { COST } from '~/utils/data'
 const route = useRoute()
 const acts = qlist(route.query.acts).filter(a => findLeaf(a))
 const pre = route.query.stops ? qlist(route.query.stops) : acts.map(a => islandOf(findLeaf(a)!))
 const from = ref(qstr(route.query.from) || 'Phuket')
-const mode = ref(MODE[qstr(route.query.mode)] ? qstr(route.query.mode) : 'time')
+const mode = ref(COST[qstr(route.query.mode)] ? qstr(route.query.mode) : 'time')
 const stops = ref<string[]>([...new Set(pre)])
 const chosen = computed(() => stops.value.filter(v => v !== from.value))
 const r = computed(() => bestTrip(from.value, chosen.value, mode.value))
